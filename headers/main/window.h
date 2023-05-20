@@ -1,6 +1,6 @@
 #include <gtk/gtk.h>
 
-GtkWidget * createWindow()
+GtkWidget *createWindow()
 {
     GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(window), "Visualizer Tool");

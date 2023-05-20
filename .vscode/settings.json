@@ -4,6 +4,11 @@
         "*.js": "javascript",
         "*.scss": "scss",
         "gtk.h": "c",
-        "window.h": "c"
+        "window.h": "c",
+        "buttons.h": "c",
+        "titlebar.h": "c",
+        "figureselect.h": "c",
+        "sidebar.h": "c",
+        "loadcss.h": "c"
     }
 }

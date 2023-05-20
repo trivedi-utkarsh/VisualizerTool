@@ -2,13 +2,25 @@ window {
     background: #e9f4f5
 }
 
-.btn {
+/* .btn {
     background: #024488;
     border: none;
     outline: none;
     border-radius: 10px;
     color: snow;
 }
-.btn:hover{
+
+.btn:hover {
     background: #00264b;
+} */
+
+headerbar.titlebar {
+    min-height: 40px;
+    font-size: 20px;
+    color: black;
+    background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+}
+.bottom-bar{
+    background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+    padding: 12px;
 }
