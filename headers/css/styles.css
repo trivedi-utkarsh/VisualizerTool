@@ -1,0 +1,14 @@
+window {
+    background: #e9f4f5
+}
+
+.btn {
+    background: #024488;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    color: snow;
+}
+.btn:hover{
+    background: #00264b;
+}
