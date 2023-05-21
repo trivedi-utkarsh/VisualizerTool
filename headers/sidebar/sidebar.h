@@ -3,30 +3,37 @@
 #include "../buttons/clear.h"
 #include "figureSelect.h"
 #include "../canvas/canva.h"
+#include "entryBox.h"
 
 GtkWidget *createSideBar(GtkWidget *window)
 {
-	GtkWidget *sidebar;
 	GtkWidget *contentArea;
 	GtkWidget *hpaned;
 	GtkCssProvider *cssProvider;
 
-	sidebar = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-	gtk_box_pack_start(GTK_BOX(sidebar), gtk_label_new("Tools"), FALSE, FALSE, 0);
-	GtkWidget *figure_combo = createComboBox();
-	gtk_box_pack_start(GTK_BOX(sidebar), figure_combo, FALSE, FALSE, 0);
+	GtkWidget *sidebar = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+	gtk_style_context_add_class(gtk_widget_get_style_context(sidebar), "sidebar");
+	GtkWidget *tools_Label = gtk_label_new("TOOLS");
+	gtk_box_pack_start(GTK_BOX(sidebar),tools_Label , FALSE, FALSE, 0);
+	gtk_style_context_add_class(gtk_widget_get_style_context(tools_Label), "head-label");
 
-	// creating bottom bar
-	gtk_style_context_add_class(gtk_widget_get_style_context(sidebar), "sidebox");
-	cssProvider = gtk_css_provider_new();
-	gtk_css_provider_load_from_data(cssProvider, ".sidebox { border: 1px solid black;border-top:none; font-weight: bold; }\n", -1, NULL);
-	gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(cssProvider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+	
+	// creating a select combo box
+	GtkWidget *entryBox = createEntryBox();
+	GtkWidget *figure_combo = createComboBox(window,entryBox);
+
+	// adding figure combo box and entry box in sidebar
+	gtk_box_pack_start(GTK_BOX(sidebar), figure_combo, FALSE, FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(sidebar), entryBox, FALSE, FALSE, 0);
+
 
 	contentArea = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
 
 	// adding the canvas into content area
 	GtkWidget *canvas = createCanvas();
-	gtk_box_pack_start(GTK_BOX(contentArea), gtk_label_new("Canvas"), FALSE, FALSE, 0);
+	GtkWidget *canvas_Label = gtk_label_new("CANVAS");
+	gtk_style_context_add_class(gtk_widget_get_style_context(canvas_Label), "head-label");
+	gtk_box_pack_start(GTK_BOX(contentArea),canvas_Label , FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(contentArea), canvas, TRUE, TRUE, 0);
 
 	// creating the bottom bar
@@ -65,3 +72,42 @@ GtkWidget *createSideBar(GtkWidget *window)
 
 	return sidebar;
 }
+
+
+
+
+// int main(int argc, char *argv[]) {
+//     gtk_init(&argc, &argv);
+
+//     GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+//     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+
+//     GtkWidget *box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
+//     gtk_container_add(GTK_CONTAINER(window), box);
+
+//     GtkWidget *sidebar = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+//     gtk_box_pack_start(GTK_BOX(box), sidebar, FALSE, FALSE, 0);
+
+//     GtkListStore *model = gtk_list_store_new(1, G_TYPE_STRING);
+//     GtkTreeIter iter;
+
+//     // Add items to the combo box
+//     gtk_list_store_append(model, &iter);
+//     gtk_list_store_set(model, &iter, 0, "Circle", -1);
+
+//     gtk_list_store_append(model, &iter);
+//     gtk_list_store_set(model, &iter, 0, "Rectangle", -1);
+
+//     GtkWidget *combo_box = gtk_combo_box_new_with_model(GTK_TREE_MODEL(model));
+//     GtkCellRenderer *renderer = gtk_cell_renderer_text_new();
+//     gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(combo_box), renderer, TRUE);
+//     gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(combo_box), renderer, "text", 0, NULL);
+
+//     gtk_box_pack_start(GTK_BOX(box), combo_box, FALSE, FALSE, 0);
+//     g_signal_connect(combo_box, "changed", G_CALLBACK(on_combo_box_changed), sidebar);
+
+//     gtk_widget_show_all(window);
+//     gtk_main();
+
+//     return 0;
+// }

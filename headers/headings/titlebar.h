@@ -1,6 +1,4 @@
 #include <gtk/gtk.h>
-#include "../loadCss.h"
-
 void designTitleBar(GtkWidget *window)
 {
     GtkWidget *header_bar = gtk_header_bar_new();

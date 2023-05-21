@@ -4,12 +4,6 @@
 #include "headers/headings/titlebar.h"
 #include "headers/sidebar/sidebar.h"
 
-// static void destroy(GtkWidget * widget , gpointer data){
-// 	gtk_main_quit();
-// }
-
-// writing here to define
-
 int main(int argc, char* argv[])
 {
 	// Initialize GTK
