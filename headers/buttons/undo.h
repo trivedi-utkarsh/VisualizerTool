@@ -1,40 +1,47 @@
 #include <gtk/gtk.h>
 
-struct ClearBtnArgs
+struct UndoBtnArgs
 {
     GtkWidget *canvas;
     struct FigureStack *figureStack;
 };
 
-static void clear_button_clicked(GtkWidget *widget, gpointer data)
+static void undo_button_clicked(GtkWidget *widget, gpointer data)
 {
 
     // Cast the data pointer to the CallbackArgs structure
-    struct ClearBtnArgs *args = (struct ClearBtnArgs *)data;
+    struct UndoBtnArgs *args = (struct UndoBtnArgs *)data;
 
     // Accessing the arguments passed to the callback
     GtkWidget * canvas = args->canvas;
     struct FigureStack * figureStack = args->figureStack;
 
-    // deleting all figures
-    clear_figures(figureStack);
+    // popping the top figure if exist from the stack
+    pop_figure(figureStack);
 
     //redrawing the canvas for cleared output
     gtk_widget_queue_draw(canvas);
 
 }
 
-GtkWidget *createClearButton(GtkWidget *canvas, struct FigureStack *figureStack)
+GtkWidget *createUndoButton(GtkWidget *canvas, struct FigureStack *figureStack)
 {
     // creating a button
-    GtkWidget *button = gtk_button_new_with_label("Clear");
+    GtkWidget *button = gtk_button_new_with_label("Undo");
+
+    // Create an image widget and load the icon file
+    GtkWidget *image = gtk_image_new_from_file("/icons/undo.png");
+
+    // Set the image widget as the button's label
+    gtk_button_set_image(GTK_BUTTON(button), image);
 
     // adding arguments to structure;
-    struct ClearBtnArgs *args = (struct ClearBtnArgs *)malloc(sizeof(struct ClearBtnArgs));
+    struct UndoBtnArgs *args = (struct UndoBtnArgs *)malloc(sizeof(struct UndoBtnArgs));
+
     args->canvas = canvas;
     args->figureStack = figureStack;
 
-    g_signal_connect(button, "clicked", G_CALLBACK(clear_button_clicked), args);
+    g_signal_connect(button, "clicked", G_CALLBACK(undo_button_clicked), args);
 
     // Connect the enter and leave signals to change the cursor
     g_signal_connect(button, "enter-notify-event", G_CALLBACK(on_button_enter), NULL);

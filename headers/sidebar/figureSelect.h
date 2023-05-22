@@ -71,6 +71,32 @@ void on_combo_box_changed(GtkComboBox *combo_box, gpointer data)
             arr[3] = "Y2:";
             placeholder_texts[3] = "y2-coordinate";
             break;
+        case 5: // Ellipse
+            numBoxes = 4;
+            labelText = "Ellipse";
+            arr[0] = "X:";
+            placeholder_texts[0] = "x-coordinate of centre";
+            arr[1] = "Y:";
+            placeholder_texts[1] = "y-coordinate of centre";
+            arr[2] = "Lx:";
+            placeholder_texts[2] = "Length of axis across abscissa";
+            arr[3] = "Ly:";
+            placeholder_texts[3] = "Length of axis across ordinate";
+            break;
+        case 6: // Arc
+            numBoxes = 5;
+            labelText = "Arc";
+            arr[0] = "X:";
+            placeholder_texts[0] = "x-coordinate of centre";
+            arr[1] = "Y:";
+            placeholder_texts[1] = "y-coordinate of centre";
+            arr[2] = "R:";
+            placeholder_texts[2] = "Radius of arc";
+            arr[3] = "A:";
+            placeholder_texts[3] = "Angle1 of arc";
+            arr[4] = "A:";
+            placeholder_texts[4] = "Angle2 of arc";
+            break;
         // Add more cases for other shapes
         default:
             break;
@@ -87,9 +113,12 @@ void on_combo_box_changed(GtkComboBox *combo_box, gpointer data)
             // Create a label
             GtkWidget *label = gtk_label_new((gchar *)arr[i]);
             gtk_grid_attach(GTK_GRID(newGrid), label, 0, i, 1, 1);
+
             // Create an entry box
             GtkEntry *entry = GTK_ENTRY(gtk_entry_new());
-            gtk_entry_set_placeholder_text(entry, placeholder_texts[i]); // Set the placeholder text
+
+            //setting the placeholder text
+            gtk_entry_set_placeholder_text(entry, placeholder_texts[i]);
             gtk_widget_set_name(GTK_WIDGET(entry), "my-entry-box");
             gtk_grid_attach(GTK_GRID(newGrid), GTK_WIDGET(entry), 1, i, 1, 1);
         }
@@ -121,10 +150,16 @@ GtkWidget *createComboBox(GtkWidget *window, GtkWidget *entryBox)
     gtk_list_store_append(model, &iter);
     gtk_list_store_set(model, &iter, 0, "LINE", -1);
 
+    gtk_list_store_append(model, &iter);
+    gtk_list_store_set(model, &iter, 0, "ELLIPSE", -1);
+
+    gtk_list_store_append(model, &iter);
+    gtk_list_store_set(model, &iter, 0, "ARC", -1);
+
     GtkWidget *combo_box = gtk_combo_box_new_with_model(GTK_TREE_MODEL(model));
 
     // Setting combobox select figure active
-     gtk_combo_box_set_active(GTK_COMBO_BOX(combo_box), 0);
+    gtk_combo_box_set_active(GTK_COMBO_BOX(combo_box), 0);
 
     GtkCellRenderer *renderer = gtk_cell_renderer_text_new();
     gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(combo_box), renderer, TRUE);

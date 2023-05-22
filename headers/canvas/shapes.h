@@ -21,7 +21,7 @@ void draw_rectangle(cairo_t *cr, double x1, double y1, double width, double heig
     cairo_rectangle(cr, x1, y1, width, height);
     cairo_stroke(cr);
 }
-void draw_line_two_point_form( cairo_t *cr,double x1, double y1, double x2, double y2)
+void draw_line( cairo_t *cr,double x1, double y1, double x2, double y2)
 {
     // Set the drawing color to black
     cairo_set_source_rgb(cr, 0, 0, 0);
@@ -34,7 +34,7 @@ void draw_line_two_point_form( cairo_t *cr,double x1, double y1, double x2, doub
     // Stroke the path to draw the outline 
     cairo_stroke(cr);
 }
-void traingle(cairo_t *cr,double x1, double y1, double x2, double y2,double x3,double y3){
+void draw_traingle(cairo_t *cr,double x1, double y1, double x2, double y2,double x3,double y3){
      // Set the drawing color to black
     cairo_set_source_rgb(cr, 0, 0, 0);
 
@@ -67,32 +67,14 @@ void draw_ellipse(cairo_t *crelp, double xc, double yc, double radius_x, double 
     
     cairo_restore(crelp);
 }
-gboolean draw_callback(GtkWidget *widget, cairo_t *crelp, gpointer data)
-{
-    guint width, height;
-    
-    // Get the size of the widget
-    width = gtk_widget_get_allocated_width(widget);
-    height = gtk_widget_get_allocated_height(widget);
-    
-    // Set the ellipse parameters
-    double xc = width / 2.0;
-    double yc = height / 2.0;
-    double radius_x = width / 4.0;
-    double radius_y = height / 4.0;
-    
-    // Call the draw_ellipse function
-    draw_ellipse(crelp, xc, yc, radius_x, radius_y);
-    
-    return FALSE;
-}
-void draw_half_circle(cairo_t *cr, double x1, double y1, double r)
+
+void draw_arc(cairo_t *cr, double x1, double y1, double r,float angle1,float angle2)
 {
 
     cairo_set_source_rgb(cr, 0, 0, 0); // Black color
     cairo_set_line_width(cr, 1);
 
     // Draw the circle
-    cairo_arc(cr, x1, y1, r, G_PI, 0);
+    cairo_arc(cr, x1, y1, r, 2 * M_PI-(G_PI/180)*angle1, angle2);
     cairo_stroke(cr);
 }

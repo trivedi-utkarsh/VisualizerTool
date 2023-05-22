@@ -81,17 +81,16 @@ gboolean draw_on_canvas(GtkWidget *widget, cairo_t *cr, gpointer data)
 
     cairo_fill(cr);
     
-    struct FigureNode * canvasFigures = (struct FigureNode *)(data);
-    drawFigures(canvasFigures,cr,cx,cy);
+    drawFigures(data,cr,cx,cy);
 
 
     return FALSE;
 }
 
-GtkWidget *createCanvas(struct FigureNode * canvasFigures)
+GtkWidget *createCanvas(struct FigureStack * figureStack)
 {
     GtkWidget *drawing_area = gtk_drawing_area_new();
 
-    g_signal_connect(G_OBJECT(drawing_area), "draw", G_CALLBACK(draw_on_canvas), canvasFigures);
+    g_signal_connect(G_OBJECT(drawing_area), "draw", G_CALLBACK(draw_on_canvas),figureStack);
     return drawing_area;
 }

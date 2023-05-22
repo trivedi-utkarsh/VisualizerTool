@@ -4,7 +4,7 @@
 
 // Custom structure to hold the drawing callback arguments
 struct Draw_CallbackArgs {
-    struct FigureNode *canvasFigures;
+    struct FigureStack *figureStack;
     GtkWidget *entry_box;
     GtkWidget *figure_combo;
     GtkWidget *canvas;
@@ -19,58 +19,46 @@ void drawing_button_clicked(GtkButton *button, gpointer data)
     struct Draw_CallbackArgs *args = (struct Draw_CallbackArgs *)data;
 
     // Accessing the arguments passed to the callback
-    struct FigureNode *canvasFigures = args->canvasFigures;
+    struct FigureStack *figureStack = args->figureStack;
     GtkWidget *entry_box = args->entry_box;
     GtkWidget *figure_combo = args->figure_combo;
     GtkWidget *canvas = args->canvas;
 
-    // Using the passed arguments as needed
-    // Retrieve the input dimensions from the text entry widgets
-    
+    // finding type of figure
+    gint type = gtk_combo_box_get_active(GTK_COMBO_BOX(figure_combo));
 
-    // to insert into canvasFigures the new figure
-
-    // printf("%d \n", GTK_IS_BOX(entry_box));
-    printf("%d \n", GTK_IS_COMBO_BOX(figure_combo));
-    // printf("%d \n", GTK_IS_COMBO_BOX(figure_combo));
-
-    // // we found out the type of figure
-    // gtk_combo_box_set_active(GTK_COMBO_BOX(figure_combo), 1);
-    // gint active = gtk_combo_box_get_active(figure_combo);
 
     // finding the dimensions of figure
-    // GList *children = gtk_container_get_children(GTK_CONTAINER(entry_box));
-    // GtkWidget *grid = GTK_WIDGET(children->data);
-    // g_list_free(children);
+    GList *children = gtk_container_get_children(GTK_CONTAINER(entry_box));
+    GtkWidget *grid = GTK_WIDGET(children->data);
+    g_list_free(children);
 
-    // // for storing figure dimensions
-    // int fig_dimensions[6];
 
-    // children = gtk_container_get_children(GTK_CONTAINER(grid));
+    // for storing figure dimensions
+    int fig_dimensions[6];
 
-    // // iterating over children
-    // GList *iter;
-    // int i =  0;
-    // iter = g_list_next(iter);
-    // for (iter = children; iter != NULL;)
-    // {
-    //     GtkWidget *entry_box = GTK_WIDGET(iter->data);
-    //     const gchar *entry_text = gtk_entry_get_text(GTK_ENTRY(entry_box));
-    //     gint entry_value = atoi(entry_text);
-    //     fig_dimensions[i] = (int)entry_value;
-    //     printf("%d \n",(int)entry_value);
-    //     iter = g_list_next(iter);
-    //     iter = g_list_next(iter);
-    //     i++;
-    // }
+    children = gtk_container_get_children(GTK_CONTAINER(grid));
 
-    // push_figure(&canvasFigures,fig_dimensions,(int)active);
+    // iterating over children
+    GList *iter;
+    int i =  0;
+    for (iter = children; iter != NULL;)
+    {
+        GtkWidget *entry_box = GTK_WIDGET(iter->data);
+        const gchar *entry_text = gtk_entry_get_text(GTK_ENTRY(entry_box));
+        gint entry_value = atoi(entry_text);
+        fig_dimensions[i] = (int)entry_value;
+        iter = g_list_next(iter);
+        iter = g_list_next(iter);
+        i++;
+    }
 
-    // // Force a redraw of the canvas widget
+    push_figure(figureStack,fig_dimensions,(int)type);
+
     gtk_widget_queue_draw(canvas);
 }
 
-GtkWidget *createDrawButton(GtkWidget *canvas, GtkWidget *figure_combo, GtkWidget *entry_box, struct FigureNode *canvasFigures)
+GtkWidget *createDrawButton(GtkWidget *canvas, GtkWidget *figure_combo, GtkWidget *entry_box, struct FigureStack * figureStack)
 {
 
     // creating a button
@@ -78,7 +66,7 @@ GtkWidget *createDrawButton(GtkWidget *canvas, GtkWidget *figure_combo, GtkWidge
     
     // setting arguments to pass in callback
     struct Draw_CallbackArgs * args = (struct Draw_CallbackArgs *)malloc(sizeof(struct Draw_CallbackArgs));
-    args->canvasFigures = canvasFigures;
+    args->figureStack = figureStack;
     args->entry_box = entry_box;
     args->figure_combo = figure_combo;
     args->canvas = canvas;
