@@ -1,8 +1,11 @@
 #include <gtk/gtk.h>
+#include "headers/canvas/shapeStructure.h"
 #include "headers/main/window.h"
 #include "headers/css/load.h"
 #include "headers/headings/titlebar.h"
 #include "headers/sidebar/sidebar.h"
+
+static struct FigureNode * canvasFigures = NULL;
 
 int main(int argc, char* argv[])
 {
@@ -19,7 +22,7 @@ int main(int argc, char* argv[])
 	load_CSS();
 
 	//create sidebar
-	GtkWidget *sidebar = createSideBar(window);
+	GtkWidget *sidebar = createSideBar(window,canvasFigures);
 
 	//show the main window
 	gtk_widget_show_all(window);

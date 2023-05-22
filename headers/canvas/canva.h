@@ -1,5 +1,6 @@
 #include <gtk/gtk.h>
 #include <math.h>
+
 void draw_arrow_head(cairo_t *cr, double x1, double y1, double x2, double y2, double arrow_size)
 {
     double angle = atan2(y2 - y1, x2 - x1);
@@ -10,18 +11,7 @@ void draw_arrow_head(cairo_t *cr, double x1, double y1, double x2, double y2, do
     cairo_stroke(cr);
 }
 
-void draw_circle(cairo_t *cr , double x1, double y1 , double r){
-
-    cairo_set_source_rgb(cr, 0, 0, 0); // Black color
-    cairo_set_line_width(cr, 1);
-    
-    // Draw the circle
-    cairo_arc(cr, x1, y1, r, 0, 2 * G_PI);
-    cairo_stroke(cr);
-}
-
-
-gboolean draw_something(GtkWidget *widget, cairo_t *cr, gpointer data)
+gboolean draw_on_canvas(GtkWidget *widget, cairo_t *cr, gpointer data)
 {
     guint width, height;
     GdkRGBA color;
@@ -67,12 +57,12 @@ gboolean draw_something(GtkWidget *widget, cairo_t *cr, gpointer data)
     cairo_move_to(cr, cx, 20.0);
     cairo_line_to(cr, cx, height - 20);
     cairo_stroke(cr);
-    
+
     // for down arrow
     draw_arrow_head(cr, cx, 20.0, cx, height - 20, 10);
 
     // for up arrow
-    draw_arrow_head(cr, cx, height-20, cx, 20.0, 10);
+    draw_arrow_head(cr, cx, height - 20, cx, 20.0, 10);
 
     // creating horizontal dark line
     cairo_move_to(cr, 30.0, cy);
@@ -85,20 +75,23 @@ gboolean draw_something(GtkWidget *widget, cairo_t *cr, gpointer data)
     // creating right arrow
     draw_arrow_head(cr, 30.0, cy, width - 30, cy, 10);
 
-    // creating a circle
-    draw_circle(cr,cx + 60,cy,400);
 
     gtk_style_context_get_color(context, gtk_style_context_get_state(context), &color);
     gdk_cairo_set_source_rgba(cr, &color);
 
     cairo_fill(cr);
+    
+    struct FigureNode * canvasFigures = (struct FigureNode *)(data);
+    drawFigures(canvasFigures,cr,cx,cy);
+
 
     return FALSE;
 }
 
-GtkWidget *createCanvas()
+GtkWidget *createCanvas(struct FigureNode * canvasFigures)
 {
     GtkWidget *drawing_area = gtk_drawing_area_new();
-    g_signal_connect(G_OBJECT(drawing_area), "draw", G_CALLBACK(draw_something), NULL);
+
+    g_signal_connect(G_OBJECT(drawing_area), "draw", G_CALLBACK(draw_on_canvas), canvasFigures);
     return drawing_area;
 }

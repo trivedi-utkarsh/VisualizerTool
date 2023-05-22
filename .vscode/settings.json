@@ -9,6 +9,8 @@
         "titlebar.h": "c",
         "figureselect.h": "c",
         "sidebar.h": "c",
-        "loadcss.h": "c"
+        "loadcss.h": "c",
+        "shapestructure.h": "c",
+        "load.h": "c"
     }
 }

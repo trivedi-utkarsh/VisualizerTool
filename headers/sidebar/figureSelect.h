@@ -5,7 +5,6 @@ void on_combo_box_changed(GtkComboBox *combo_box, gpointer data)
     GtkWidget *entryBox = GTK_WIDGET(data); // parent widget
 
     GList *children = gtk_container_get_children(GTK_CONTAINER(entryBox));
-    GList *iter;
     GtkWidget *entry_grid = GTK_WIDGET(children->data);
     g_list_free(children);
 

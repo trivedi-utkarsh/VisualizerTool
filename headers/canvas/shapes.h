@@ -1,4 +1,17 @@
 #include <gtk/gtk.h>
+#include <math.h>
+
+void draw_circle(cairo_t *cr, double x1, double y1, double r)
+{
+
+    cairo_set_source_rgb(cr, 0, 0, 0); // Black color
+    cairo_set_line_width(cr, 1);
+
+    // Draw the circle
+    cairo_arc(cr, x1, y1, r, 0, 2 * G_PI);
+    cairo_stroke(cr);
+}
+
 void draw_rectangle(cairo_t *cr, double x1, double y1, double width, double height)
 {
     cairo_set_source_rgb(cr, 0, 0, 0); // Black color
@@ -73,4 +86,13 @@ gboolean draw_callback(GtkWidget *widget, cairo_t *crelp, gpointer data)
     
     return FALSE;
 }
-void 
+void draw_half_circle(cairo_t *cr, double x1, double y1, double r)
+{
+
+    cairo_set_source_rgb(cr, 0, 0, 0); // Black color
+    cairo_set_line_width(cr, 1);
+
+    // Draw the circle
+    cairo_arc(cr, x1, y1, r, G_PI, 0);
+    cairo_stroke(cr);
+}

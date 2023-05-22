@@ -5,7 +5,7 @@
 #include "../canvas/canva.h"
 #include "entryBox.h"
 
-GtkWidget *createSideBar(GtkWidget *window)
+GtkWidget *createSideBar(GtkWidget *window,struct FigureNode * canvasFigures)
 {
 	GtkWidget *contentArea;
 	GtkWidget *hpaned;
@@ -30,7 +30,7 @@ GtkWidget *createSideBar(GtkWidget *window)
 	contentArea = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
 
 	// adding the canvas into content area
-	GtkWidget *canvas = createCanvas();
+	GtkWidget *canvas = createCanvas(canvasFigures);
 	GtkWidget *canvas_Label = gtk_label_new("CANVAS");
 	gtk_style_context_add_class(gtk_widget_get_style_context(canvas_Label), "head-label");
 	gtk_box_pack_start(GTK_BOX(contentArea),canvas_Label , FALSE, FALSE, 0);
@@ -43,7 +43,7 @@ GtkWidget *createSideBar(GtkWidget *window)
     gtk_widget_set_size_request(bottom_bar, -1, 30); // Set the desired height
 
 	// creating the draw button in the bottom bar
-	GtkWidget *draw_button = createDrawButton();
+	GtkWidget *draw_button = createDrawButton(canvas,figure_combo,entryBox,canvasFigures);
 
 	// creating the clear button in the bottom bar
 	GtkWidget *clear_button = createClearButton();
