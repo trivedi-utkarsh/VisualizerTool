@@ -75,6 +75,7 @@ void draw_arc(cairo_t *cr, double x1, double y1, double r,float angle1,float ang
     cairo_set_line_width(cr, 1);
 
     // Draw the circle
-    cairo_arc(cr, x1, y1, r, 2 * M_PI-(G_PI/180)*angle1, angle2);
+    //cairo_arc(cr, x1, y1, r, 2 * M_PI-(G_PI/180)*angle1, angle2);
+    cairo_arc(cr, x1, y1, r,-1*(G_PI/180)*angle2,-1*(G_PI/180)*angle1);
     cairo_stroke(cr);
 }

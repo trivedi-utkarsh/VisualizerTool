@@ -22,14 +22,17 @@ struct FigureStack *createFigureStack()
 }
 
 // for undoing called in undo.h
-void pop_figure(struct FigureStack *figureStack)
+// popping return the node pointer without freeing it
+
+struct FigureNode *pop_figure(struct FigureStack *figureStack)
 {
     if (figureStack->head != NULL)
     {
         struct FigureNode *node = figureStack->head;
         figureStack->head = figureStack->head->next;
-        free(node);
+        return node;
     }
+    return NULL;
 }
 
 // for clearing all figures
@@ -58,6 +61,19 @@ void push_figure(struct FigureStack *figureStack, int dimension[], int type)
     newNode->next = figureStack->head;
     figureStack->head = newNode;
 }
+
+// tranfering node from "from" to "to" stack
+void transfer_figure(struct FigureStack *from, struct FigureStack *to)
+{
+        // popping out that something from stack;
+        struct FigureNode *poppedFigure = pop_figure(from);
+        if (poppedFigure != NULL)
+        {
+            push_figure(to, poppedFigure->dim, poppedFigure->type);
+            free(poppedFigure);
+        }
+}
+
 
 void drawFigures(struct FigureStack *figureStack, cairo_t *cr, int cx, int cy)
 {

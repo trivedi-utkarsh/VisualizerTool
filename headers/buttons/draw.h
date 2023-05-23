@@ -5,6 +5,7 @@
 // Custom structure to hold the drawing callback arguments
 struct Draw_CallbackArgs {
     struct FigureStack *figureStack;
+    struct FigureStack *redoStack;
     GtkWidget *entry_box;
     GtkWidget *figure_combo;
     GtkWidget *canvas;
@@ -20,6 +21,7 @@ void drawing_button_clicked(GtkButton *button, gpointer data)
 
     // Accessing the arguments passed to the callback
     struct FigureStack *figureStack = args->figureStack;
+    struct FigureStack *redoStack = args->redoStack;
     GtkWidget *entry_box = args->entry_box;
     GtkWidget *figure_combo = args->figure_combo;
     GtkWidget *canvas = args->canvas;
@@ -55,10 +57,13 @@ void drawing_button_clicked(GtkButton *button, gpointer data)
 
     push_figure(figureStack,fig_dimensions,(int)type);
 
+    // clearing the redo stack if any draw is performed
+    clear_figures(redoStack);
+
     gtk_widget_queue_draw(canvas);
 }
 
-GtkWidget *createDrawButton(GtkWidget *canvas, GtkWidget *figure_combo, GtkWidget *entry_box, struct FigureStack * figureStack)
+GtkWidget *createDrawButton(GtkWidget *canvas, GtkWidget *figure_combo, GtkWidget *entry_box, struct FigureStack * figureStack,struct FigureStack * redoStack)
 {
 
     // creating a button
@@ -67,6 +72,7 @@ GtkWidget *createDrawButton(GtkWidget *canvas, GtkWidget *figure_combo, GtkWidge
     // setting arguments to pass in callback
     struct Draw_CallbackArgs * args = (struct Draw_CallbackArgs *)malloc(sizeof(struct Draw_CallbackArgs));
     args->figureStack = figureStack;
+    args->redoStack = redoStack;
     args->entry_box = entry_box;
     args->figure_combo = figure_combo;
     args->canvas = canvas;

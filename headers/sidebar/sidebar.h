@@ -5,8 +5,9 @@
 #include "../canvas/canva.h"
 #include "entryBox.h"
 #include "../buttons/undo.h"
+#include "../buttons/redo.h"
 
-GtkWidget *createSideBar(GtkWidget *window,struct FigureStack * figureStack)
+GtkWidget *createSideBar(GtkWidget *window,struct FigureStack * figureStack,struct FigureStack * redoStack)
 {
 	GtkWidget *contentArea;
 	GtkWidget *hpaned;
@@ -44,16 +45,21 @@ GtkWidget *createSideBar(GtkWidget *window,struct FigureStack * figureStack)
     gtk_widget_set_size_request(bottom_bar, -1, 30); // Set the desired height
 
 	// creating the draw button in the bottom bar
-	GtkWidget *draw_button = createDrawButton(canvas,figure_combo,entryBox,figureStack);
+	GtkWidget *draw_button = createDrawButton(canvas,figure_combo,entryBox,figureStack,redoStack);
 
 	// creating the clear button in the bottom bar
 	GtkWidget *clear_button = createClearButton(canvas , figureStack);
 
 	// creating undo button in the bottom bar
-	GtkWidget *undo_button = createUndoButton(canvas, figureStack);
+	GtkWidget *undo_button = createUndoButton(canvas, figureStack,redoStack);
+
+	// creating a redo button in the bottom bar
+	GtkWidget *redo_button = createRedoButton(canvas, figureStack,redoStack);
+
 	
 	gtk_box_pack_start(GTK_BOX(bottom_bar), draw_button, FALSE, FALSE, 0); // Align to the start (left)
     gtk_box_pack_end(GTK_BOX(bottom_bar), undo_button, FALSE, FALSE, 0); // Align to the end (right)
+    gtk_box_pack_end(GTK_BOX(bottom_bar), redo_button, FALSE, FALSE, 0); // Align to the end (right)
     gtk_box_pack_end(GTK_BOX(bottom_bar), clear_button, FALSE, FALSE, 0); // Align to the end (right)
 
 	// Create the paned widget

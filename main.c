@@ -23,8 +23,11 @@ int main(int argc, char *argv[])
 	// creating figure Stack to store figures
 	struct FigureStack *figureStack = createFigureStack();
 
+	//creating a redo stack for redoing the figures
+	struct FigureStack *redoStack = createFigureStack();
+
 	// create sidebar
-	GtkWidget *sidebar = createSideBar(window, figureStack);
+	GtkWidget *sidebar = createSideBar(window, figureStack,redoStack);
 
 	// show the main window
 	gtk_widget_show_all(window);
