@@ -12,5 +12,6 @@
         "loadcss.h": "c",
         "shapestructure.h": "c",
         "load.h": "c"
-    }
+    },
+    "cmake.sourceDirectory": "${workspaceFolder}/Users/trive/StudioProjects/flutter_app/windows/runner"
 }

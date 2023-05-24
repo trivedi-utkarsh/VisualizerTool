@@ -21,7 +21,41 @@ void on_combo_box_changed(GtkComboBox *combo_box, gpointer data)
 
         switch (active)
         {
-        case 1: // Circle
+        case 1: // Point
+            numBoxes = 2;
+            labelText = "Point";
+            arr[0] = "X:";
+            placeholder_texts[0] = "x-coordinate";
+            arr[1] = "Y:";
+            placeholder_texts[1] = "y-coordinate";
+            break;
+        case 2: // Line
+            numBoxes = 4;
+            labelText = "Line";
+            arr[0] = "X1:";
+            placeholder_texts[0] = "x1-coordinate";
+            arr[1] = "Y1:";
+            placeholder_texts[1] = "y1-coordinate";
+            arr[2] = "X2:";
+            placeholder_texts[2] = "x2-coordinate";
+            arr[3] = "Y2:";
+            placeholder_texts[3] = "y2-coordinate";
+            break;
+        case 3: // Arc
+            numBoxes = 5;
+            labelText = "Arc";
+            arr[0] = "X:";
+            placeholder_texts[0] = "x-coordinate of centre";
+            arr[1] = "Y:";
+            placeholder_texts[1] = "y-coordinate of centre";
+            arr[2] = "R:";
+            placeholder_texts[2] = "Radius of arc";
+            arr[3] = "A:";
+            placeholder_texts[3] = "Angle1 of arc";
+            arr[4] = "A:";
+            placeholder_texts[4] = "Angle2 of arc";
+            break;
+        case 4: // Circle
             numBoxes = 3;
             labelText = "Circle";
             arr[0] = "X:";
@@ -31,19 +65,7 @@ void on_combo_box_changed(GtkComboBox *combo_box, gpointer data)
             arr[2] = "R:";
             placeholder_texts[2] = "Radius";
             break;
-        case 2: // Rectangle
-            numBoxes = 4;
-            labelText = "Rectangle";
-            arr[0] = "X:";
-            placeholder_texts[0]="x-coordinate";
-            arr[1] = "Y:";
-            placeholder_texts[1]="y-coordinate";
-            arr[2] = "W:";
-            placeholder_texts[2]="Width";
-            arr[3] = "H:";
-            placeholder_texts[3]="Height";
-            break;
-        case 3: // Triangle
+        case 5: // Triangle
             numBoxes = 6;
             labelText = "Triangle";
             arr[0] = "X1:";
@@ -59,19 +81,19 @@ void on_combo_box_changed(GtkComboBox *combo_box, gpointer data)
             arr[5] = "Y3:";
             placeholder_texts[5] = "y3-coordinate";
             break;
-        case 4: // Line
+        case 6: // Rectangle
             numBoxes = 4;
-            labelText = "Line";
-            arr[0] = "X1:";
-            placeholder_texts[0] = "x1-coordinate";
-            arr[1] = "Y1:";
-            placeholder_texts[1] = "y1-coordinate";
-            arr[2] = "X2:";
-            placeholder_texts[2] = "x2-coordinate";
-            arr[3] = "Y2:";
-            placeholder_texts[3] = "y2-coordinate";
+            labelText = "Rectangle";
+            arr[0] = "X:";
+            placeholder_texts[0]="x-coordinate";
+            arr[1] = "Y:";
+            placeholder_texts[1]="y-coordinate";
+            arr[2] = "W:";
+            placeholder_texts[2]="Width";
+            arr[3] = "H:";
+            placeholder_texts[3]="Height";
             break;
-        case 5: // Ellipse
+        case 7: // Ellipse
             numBoxes = 4;
             labelText = "Ellipse";
             arr[0] = "X:";
@@ -83,21 +105,74 @@ void on_combo_box_changed(GtkComboBox *combo_box, gpointer data)
             arr[3] = "Ly:";
             placeholder_texts[3] = "Length of axis across ordinate";
             break;
-        case 6: // Arc
-            numBoxes = 5;
-            labelText = "Arc";
+        case 8: // Horizontal Parabola
+            numBoxes = 3;
+            labelText = "Horizontal Parabola";
+            arr[0] = "Fx:";
+            placeholder_texts[0] = "x-coordinate of focus";
+            arr[1] = "Fy:";
+            placeholder_texts[1] = "y-coordinate of focus";
+            arr[2] = "LR:";
+            placeholder_texts[2] = "Length of Latus Rectum";
+            break;
+        case 9: // Vertical Parabola
+            numBoxes = 3;
+            labelText = "Vertical Parabola";
+            arr[0] = "Fx:";
+            placeholder_texts[0] = "x-coordinate of focus";
+            arr[1] = "Fy:";
+            placeholder_texts[1] = "y-coordinate of focus";
+            arr[2] = "LR:";
+            placeholder_texts[2] = "Length of Latus Rectum";
+            break;
+        case 10: // hyperbola
+            numBoxes = 4;
+            labelText = "Hyperbola";
             arr[0] = "X:";
             placeholder_texts[0] = "x-coordinate of centre";
             arr[1] = "Y:";
             placeholder_texts[1] = "y-coordinate of centre";
-            arr[2] = "R:";
-            placeholder_texts[2] = "Radius of arc";
-            arr[3] = "A:";
-            placeholder_texts[3] = "Angle1 of arc";
-            arr[4] = "A:";
-            placeholder_texts[4] = "Angle2 of arc";
+            arr[2] = "a:";
+            placeholder_texts[2] = "distance from center to tranverse axis";
+            arr[3] = "b:";
+            placeholder_texts[3] = "distance from center to conjugate axis";
             break;
-        // Add more cases for other shapes
+        case 11: // hyperbola
+            numBoxes = 4;
+            labelText = "Hyperbola";
+            arr[0] = "X:";
+            placeholder_texts[0] = "x-coordinate of centre";
+            arr[1] = "Y:";
+            placeholder_texts[1] = "y-coordinate of centre";
+            arr[2] = "a:";
+            placeholder_texts[2] = "distance from center to tranverse axis";
+            arr[3] = "b:";
+            placeholder_texts[3] = "distance from center to conjugate axis";
+            break;
+        case 12: // Cycloid
+            numBoxes = 4;
+            labelText = "Cycloid";
+            arr[0] = "X:";
+            placeholder_texts[0] = "x-coordinate of peripheral point";
+            arr[1] = "Y:";
+            placeholder_texts[1] = "y-coordinate of peripheral point";
+            arr[2] = "R:";
+            placeholder_texts[2] = "Radius of circle";
+            arr[3] = "Rv:";
+            placeholder_texts[3] = "No. of revolutions";
+            break;
+        case 13: // Spiral
+            numBoxes = 4;
+            labelText = "Spiral";
+            arr[0] = "X:";
+            placeholder_texts[0] = "x-coordinate";
+            arr[1] = "Y:";
+            placeholder_texts[1] = "y-coordinate";
+            arr[2] = "R:";
+            placeholder_texts[2] = "Radius";
+            arr[3] = "T:";
+            placeholder_texts[3] = "Turns";
+            break;
         default:
             break;
         }
@@ -139,22 +214,44 @@ GtkWidget *createComboBox(GtkWidget *window, GtkWidget *entryBox)
     gtk_list_store_set(model, &iter, 0, "Select Figure...", -1);
 
     gtk_list_store_append(model, &iter);
-    gtk_list_store_set(model, &iter, 0, "CIRCLE", -1);
-
-    gtk_list_store_append(model, &iter);
-    gtk_list_store_set(model, &iter, 0, "RECTANGLE", -1);
-
-    gtk_list_store_append(model, &iter);
-    gtk_list_store_set(model, &iter, 0, "TRIANGLE", -1);
+    gtk_list_store_set(model, &iter, 0, "POINT", -1);
 
     gtk_list_store_append(model, &iter);
     gtk_list_store_set(model, &iter, 0, "LINE", -1);
 
     gtk_list_store_append(model, &iter);
+    gtk_list_store_set(model, &iter, 0, "ARC", -1);
+
+    gtk_list_store_append(model, &iter);
+    gtk_list_store_set(model, &iter, 0, "CIRCLE", -1);
+
+    gtk_list_store_append(model, &iter);
+    gtk_list_store_set(model, &iter, 0, "TRIANGLE", -1);
+
+    gtk_list_store_append(model, &iter);
+    gtk_list_store_set(model, &iter, 0, "RECTANGLE", -1);
+
+    gtk_list_store_append(model, &iter);
     gtk_list_store_set(model, &iter, 0, "ELLIPSE", -1);
 
     gtk_list_store_append(model, &iter);
-    gtk_list_store_set(model, &iter, 0, "ARC", -1);
+    gtk_list_store_set(model, &iter, 0, "HORIZONTAL PARABOLA", -1);
+
+    gtk_list_store_append(model, &iter);
+    gtk_list_store_set(model, &iter, 0, "VERTICAL PARABOLA", -1);
+
+    gtk_list_store_append(model, &iter);
+    gtk_list_store_set(model, &iter, 0, "HORIZONTAL HYPERBOLA", -1);
+
+    gtk_list_store_append(model, &iter);
+    gtk_list_store_set(model, &iter, 0, "VERTICAL HYPERBOLA", -1);
+
+    gtk_list_store_append(model, &iter);
+    gtk_list_store_set(model, &iter, 0, "CYCLOID", -1);
+
+    gtk_list_store_append(model, &iter);
+    gtk_list_store_set(model, &iter, 0, "SPIRAL", -1);
+
 
     GtkWidget *combo_box = gtk_combo_box_new_with_model(GTK_TREE_MODEL(model));
 

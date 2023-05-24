@@ -9,6 +9,8 @@ struct Draw_CallbackArgs {
     GtkWidget *entry_box;
     GtkWidget *figure_combo;
     GtkWidget *canvas;
+    double * colorValue;
+    double *lineWidth;
 };
 
 // Callback function to handle the "Draw" button click event
@@ -25,6 +27,8 @@ void drawing_button_clicked(GtkButton *button, gpointer data)
     GtkWidget *entry_box = args->entry_box;
     GtkWidget *figure_combo = args->figure_combo;
     GtkWidget *canvas = args->canvas;
+    double * colorValue = args->colorValue;
+    double * lineWidth = args->lineWidth;
 
     // finding type of figure
     gint type = gtk_combo_box_get_active(GTK_COMBO_BOX(figure_combo));
@@ -54,8 +58,8 @@ void drawing_button_clicked(GtkButton *button, gpointer data)
         iter = g_list_next(iter);
         i++;
     }
-
-    push_figure(figureStack,fig_dimensions,(int)type);
+    
+    push_figure(figureStack,fig_dimensions,(int)type,colorValue,*lineWidth);
 
     // clearing the redo stack if any draw is performed
     clear_figures(redoStack);
@@ -63,7 +67,15 @@ void drawing_button_clicked(GtkButton *button, gpointer data)
     gtk_widget_queue_draw(canvas);
 }
 
-GtkWidget *createDrawButton(GtkWidget *canvas, GtkWidget *figure_combo, GtkWidget *entry_box, struct FigureStack * figureStack,struct FigureStack * redoStack)
+GtkWidget *createDrawButton(
+    GtkWidget *canvas,
+    GtkWidget *figure_combo,
+    GtkWidget *entry_box,
+    struct FigureStack * figureStack,
+    struct FigureStack * redoStack,
+    double * colorValue,
+    double *lineWidth
+    )
 {
 
     // creating a button
@@ -76,6 +88,8 @@ GtkWidget *createDrawButton(GtkWidget *canvas, GtkWidget *figure_combo, GtkWidge
     args->entry_box = entry_box;
     args->figure_combo = figure_combo;
     args->canvas = canvas;
+    args->colorValue = colorValue;
+    args->lineWidth = lineWidth;
 
     g_signal_connect(button, "clicked", G_CALLBACK(drawing_button_clicked), args);
 
