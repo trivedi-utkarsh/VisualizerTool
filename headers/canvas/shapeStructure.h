@@ -1,5 +1,5 @@
-#include <stdlib.h>
 #include <gtk/gtk.h>
+#include <stdlib.h>
 #include "shapes.h"
 
 struct FigureNode
@@ -125,20 +125,32 @@ void drawFigures(struct FigureStack *figureStack, cairo_t *cr, int cx, int cy)
             draw_V_parabola(cr, 2 * cx, cx + head->dim[2], cy - head->dim[1], head->dim[0], head->color, head->lineWidth);
             break;
         case 10:
-            // for creating a hyperbola
-            draw_H_hyperbola(cr, cx + head->dim[3], cy - head->dim[2],head->dim[1],head->dim[0], head->color, head->lineWidth);
+            // for creating a horizontal hyperbola
+            draw_H_hyperbola(cr, cx + head->dim[3], cy - head->dim[2], head->dim[1], head->dim[0], head->color, head->lineWidth);
             break;
         case 11:
-            // for creating a hyperbola
-            draw_V_hyperbola(cr,cx + head->dim[3] ,cy - head->dim[2] ,head->dim[1],head->dim[0], head->color, head->lineWidth);
+            // for creating a vertical hyperbola
+            draw_V_hyperbola(cr, cx + head->dim[3], cy - head->dim[2], head->dim[1], head->dim[0], head->color, head->lineWidth);
             break;
         case 12:
-            // for creating a hyperbola
-            draw_cycloid(cr,cx + head->dim[3] ,cy - head->dim[2] ,head->dim[1],head->dim[0], head->color, head->lineWidth);
+            // for creating a cycloid
+            draw_cycloid(cr, cx + head->dim[3], cy - head->dim[2], head->dim[1], head->dim[0], head->color, head->lineWidth);
             break;
         case 13:
+            // for creating a epicycloid
+            draw_epicycloid(cr, cx + head->dim[3], cy - head->dim[2], head->dim[1], head->dim[0], head->color, head->lineWidth);
+            break;
+        case 14:
+            // for creating a hypocycloid
+            draw_hypocycloid(cr, cx + head->dim[3], cy - head->dim[2], head->dim[1], head->dim[0], head->color, head->lineWidth);
+            break;
+        case 15:
             // for creating a spiral
             draw_spiral(cr, cx + head->dim[3], cy - head->dim[2], head->dim[1], head->dim[0], head->color, head->lineWidth);
+            break;
+        case 16:
+            // for creating  mirror image of a point
+            draw_mirrorImage(cr,cx, cy, cx + head->dim[3], cy - head->dim[2], head->dim[1], head->dim[0], head->color, head->lineWidth);
             break;
         default:
             break;

@@ -1,5 +1,6 @@
 #include <gtk/gtk.h>
 #include <math.h>
+// function for drawing a point
 void draw_point(cairo_t *cr, double x1, double y1, double *color)
 {
     cairo_set_source_rgb(cr, color[0], color[1], color[2]);
@@ -8,6 +9,7 @@ void draw_point(cairo_t *cr, double x1, double y1, double *color)
     // filling the point with color
     cairo_fill(cr);
 }
+// function for drawing a line
 void draw_line(cairo_t *cr, double x1, double y1, double x2, double y2, double *color, double lineWidth)
 {
     // Set the drawing color to black
@@ -22,6 +24,7 @@ void draw_line(cairo_t *cr, double x1, double y1, double x2, double y2, double *
     // Stroke the path to draw the outline
     cairo_stroke(cr);
 }
+// function for drawing an arc
 void draw_arc(cairo_t *cr, double x1, double y1, double r, float angle1, float angle2, double *color, double lineWidth)
 {
 
@@ -33,6 +36,7 @@ void draw_arc(cairo_t *cr, double x1, double y1, double r, float angle1, float a
     cairo_arc(cr, x1, y1, r, -1 * (G_PI / 180) * angle2, -1 * (G_PI / 180) * angle1);
     cairo_stroke(cr);
 }
+// function for drawing a circle
 void draw_circle(cairo_t *cr, double x1, double y1, double r, double *color, double lineWidth)
 {
 
@@ -43,7 +47,7 @@ void draw_circle(cairo_t *cr, double x1, double y1, double r, double *color, dou
     cairo_arc(cr, x1, y1, r, 0, 2 * G_PI);
     cairo_stroke(cr);
 }
-
+// function for drawing a triangle
 void draw_traingle(cairo_t *cr, double x1, double y1, double x2, double y2, double x3, double y3, double *color, double lineWidth)
 {
     // Set the drawing color to black
@@ -60,6 +64,7 @@ void draw_traingle(cairo_t *cr, double x1, double y1, double x2, double y2, doub
     // Stroke the path to draw the outline of the triangle
     cairo_stroke(cr);
 }
+// function for drawing a rectangle
 void draw_rectangle(cairo_t *cr, double x1, double y1, double width, double height, double *color, double lineWidth)
 {
     cairo_set_source_rgb(cr, color[0], color[1], color[2]);
@@ -69,9 +74,10 @@ void draw_rectangle(cairo_t *cr, double x1, double y1, double width, double heig
     cairo_rectangle(cr, x1, y1, width, height);
     cairo_stroke(cr);
 }
-// ELLIPSE
+// function for drawing an ellipse
 void draw_ellipse(cairo_t *cr, double xc, double yc, double radius_x, double radius_y, double *color, double lineWidth)
 {
+    cairo_save(cr);
     // Set the line width and color
     cairo_set_line_width(cr, lineWidth);
     cairo_set_source_rgb(cr, color[0], color[1], color[2]);
@@ -81,8 +87,9 @@ void draw_ellipse(cairo_t *cr, double xc, double yc, double radius_x, double rad
     cairo_scale(cr, 1.0, radius_y / radius_x);
     cairo_arc(cr, 0, 0, radius_x, 0, 2 * G_PI);
     cairo_stroke(cr);
+    cairo_restore(cr);
 }
-
+// function for drawing a horizontal parabola
 void draw_H_parabola(cairo_t *cr, int height, double focus_x, double focus_y, double latus_rectum, double *color, double lineWidth)
 {
     cairo_set_source_rgb(cr, color[0], color[1], color[2]);
@@ -111,7 +118,7 @@ void draw_H_parabola(cairo_t *cr, int height, double focus_x, double focus_y, do
     // Stroke the path to draw the parabola
     cairo_stroke(cr);
 }
-
+// function for drawing a vertical parabola
 void draw_V_parabola(cairo_t *cr, int width, double focus_x, double focus_y, double latus_rectum, double *color, double lineWidth)
 {
     cairo_set_source_rgb(cr, color[0], color[1], color[2]);
@@ -140,7 +147,7 @@ void draw_V_parabola(cairo_t *cr, int width, double focus_x, double focus_y, dou
     // Stroke the path to draw the parabola
     cairo_stroke(cr);
 }
-
+// function for drawing a horizontal hyperbola
 void draw_H_hyperbola(cairo_t *cr, double xc, double yc, double radius_x, double radius_y, double *color, double lineWidth)
 {
     // radiusx = Distance from center to transverse axis
@@ -183,6 +190,7 @@ void draw_H_hyperbola(cairo_t *cr, double xc, double yc, double radius_x, double
     }
     cairo_stroke(cr);
 }
+// function for drawing a vertical hyperbola
 void draw_V_hyperbola(cairo_t *cr, double xc, double yc, double radius_x, double radius_y, double *color, double lineWidth)
 {
     // radiusx = Distance from center to transverse axis
@@ -225,6 +233,7 @@ void draw_V_hyperbola(cairo_t *cr, double xc, double yc, double radius_x, double
     }
     cairo_stroke(cr);
 }
+// function for drawing a cycloid
 void draw_cycloid(cairo_t *cr, double xc, double yc, double radius, double revolutions, double *color, double lineWidth)
 {
     // Set line color and width
@@ -243,7 +252,47 @@ void draw_cycloid(cairo_t *cr, double xc, double yc, double radius, double revol
 
     cairo_stroke(cr);
 }
-
+// function for drawing an epicycloid
+void draw_epicycloid(cairo_t *cr, double xc, double yc, double r, double R, double *color, double lineWidth)
+{ // r and R is  radius of revoling circle and fixed circle respectively
+    //(xc,xy) is the coordinate of the fixed circle
+    double x, y;
+    double angle = 0.0;
+    // Set the color and width of the epicycloid
+    cairo_set_source_rgb(cr, color[0], color[1], color[2]);
+    cairo_set_line_width(cr, lineWidth);
+    for (angle = 0.0; angle <= 2 * G_PI; angle += 0.01)
+    {
+        x = xc + (r + R) * cos(angle) - r * cos((r + R) * angle / r);
+        y = yc + (r + R) * sin(angle) - r * sin((r + R) * angle / r);
+        cairo_line_to(cr, x, y);
+    }
+    cairo_stroke(cr);
+    cairo_set_source_rgba(cr, color[0], color[1], color[2], 0.2);
+    cairo_arc(cr, xc, yc, R, 0, 2 * G_PI);
+    cairo_stroke(cr);
+}
+// function to draw a hypocycloid
+void draw_hypocycloid(cairo_t *cr, double xc, double yc, double r, double R, double *color, double lineWidth)
+{ // r and R is  radius of revoling circle and fixed circle respectively
+    //(xc,xy) is the coordinate of the fixed circle
+    double x, y;
+    double angle = 0.0;
+    // Set the color and width of the hypocycloid
+    cairo_set_source_rgb(cr, color[0], color[1], color[2]);
+    cairo_set_line_width(cr, lineWidth);
+    for (angle = 0.0; angle <= 2 * G_PI; angle += 0.01)
+    {
+        x = xc + (R - r) * cos(angle) + r * cos((R - r) * angle / r);
+        y = yc + (R - r) * sin(angle) - r * sin((R - r) * angle / r);
+        cairo_line_to(cr, x, y);
+    }
+    cairo_stroke(cr);
+    cairo_set_source_rgba(cr, color[0], color[1], color[2], 0.2);
+    cairo_arc(cr, xc, yc, R, 0, 2 * G_PI);
+    cairo_stroke(cr);
+}
+// function for drawing a spiral
 void draw_spiral(cairo_t *cr, double x, double y, double radius, int turns, double *color, double lineWidth)
 {
     // Set line color and width
@@ -268,3 +317,28 @@ void draw_spiral(cairo_t *cr, double x, double y, double radius, int turns, doub
     // Stroke the path (draw the spiral)
     cairo_stroke(cr);
 }
+void draw_mirrorImage(cairo_t *cr,double cx , double cy, double x, double y, double m, double c, double *color, double lineWidth)
+{
+
+    // drawing the point
+    draw_point(cr, x, y, color);
+
+    double actualx = x - cx;
+    double actualy = y - cy;
+
+    double x1, y1, x2, y2;
+    x1 = 0.0;
+    y1 = c;
+    x2 = -c/m;
+    y2 = 0;
+
+    // Calculate the mirror image point
+
+    double d = (x + (y - m * x + c) / m) / (1 + (1 / (m * m)));
+    double newX = 2 * d - x;
+    double newY = 2 * d * m - y + 2 * c;
+    cairo_stroke(cr);
+}
+
+
+

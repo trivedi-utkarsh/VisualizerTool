@@ -23,19 +23,18 @@ int main(int argc, char *argv[])
 	// creating figure Stack to store figures
 	struct FigureStack *figureStack = createFigureStack();
 
-
-	//creating a redo stack for redoing the figures
+	// creating a redo stack for redoing the figures
 	struct FigureStack *redoStack = createFigureStack();
 
-	//creating a global color array
-	double * colorValue = (double *)calloc(3 , sizeof(double));
+	// creating a global color array
+	double *colorValue = (double *)calloc(3, sizeof(double));
 
-	//creating the line Width value
-	double * lineWidth = (double *)malloc(sizeof(double));
+	// creating the line Width value
+	double *lineWidth = (double *)malloc(sizeof(double));
 	*lineWidth = 1.0;
 
 	// create sidebar
-	GtkWidget *sidebar = createSideBar(window, figureStack,redoStack,colorValue,lineWidth);
+	GtkWidget *sidebar = createSideBar(window, figureStack, redoStack, colorValue, lineWidth);
 
 	// show the main window
 	gtk_widget_show_all(window);

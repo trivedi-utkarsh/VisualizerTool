@@ -1,5 +1,4 @@
 #include <gtk/gtk.h>
-
 void on_combo_box_changed(GtkComboBox *combo_box, gpointer data)
 {
     GtkWidget *entryBox = GTK_WIDGET(data); // parent widget
@@ -16,7 +15,7 @@ void on_combo_box_changed(GtkComboBox *combo_box, gpointer data)
         int numBoxes = 0;
         gchar *labelText = NULL;
 
-        char *arr[6]; // contains label
+        char *arr[6];               // contains label
         char *placeholder_texts[6]; // contains placeholder texts
 
         switch (active)
@@ -85,13 +84,13 @@ void on_combo_box_changed(GtkComboBox *combo_box, gpointer data)
             numBoxes = 4;
             labelText = "Rectangle";
             arr[0] = "X:";
-            placeholder_texts[0]="x-coordinate";
+            placeholder_texts[0] = "x-coordinate";
             arr[1] = "Y:";
-            placeholder_texts[1]="y-coordinate";
+            placeholder_texts[1] = "y-coordinate";
             arr[2] = "W:";
-            placeholder_texts[2]="Width";
+            placeholder_texts[2] = "Width";
             arr[3] = "H:";
-            placeholder_texts[3]="Height";
+            placeholder_texts[3] = "Height";
             break;
         case 7: // Ellipse
             numBoxes = 4;
@@ -161,7 +160,31 @@ void on_combo_box_changed(GtkComboBox *combo_box, gpointer data)
             arr[3] = "Rv:";
             placeholder_texts[3] = "No. of revolutions";
             break;
-        case 13: // Spiral
+        case 13: // EpiCycloid
+            numBoxes = 4;
+            labelText = "EpiCycloid";
+            arr[0] = "X:";
+            placeholder_texts[0] = "x-coordinate of centre of fixed circle";
+            arr[1] = "Y:";
+            placeholder_texts[1] = "y-coordinate of centre of fixed circle";
+            arr[2] = "Rv:";
+            placeholder_texts[2] = "Radius of revolving circle";
+            arr[3] = "Rf:";
+            placeholder_texts[3] = "Radius of fixed circle";
+            break;
+        case 14: // HypoCycloid
+            numBoxes = 4;
+            labelText = "HypoCycloid";
+            arr[0] = "X:";
+            placeholder_texts[0] = "x-coordinate of centre of fixed circle";
+            arr[1] = "Y:";
+            placeholder_texts[1] = "y-coordinate of centre of fixed circle";
+            arr[2] = "Rv:";
+            placeholder_texts[2] = "Radius of revolving circle";
+            arr[3] = "Rf:";
+            placeholder_texts[3] = "Radius of fixed circle";
+            break;
+        case 15: // Spiral
             numBoxes = 4;
             labelText = "Spiral";
             arr[0] = "X:";
@@ -172,6 +195,18 @@ void on_combo_box_changed(GtkComboBox *combo_box, gpointer data)
             placeholder_texts[2] = "Radius";
             arr[3] = "T:";
             placeholder_texts[3] = "Turns";
+            break;
+        case 16: // Mirror Image
+            numBoxes = 4;
+            labelText = "Mirror Image";
+            arr[0] = "X:";
+            placeholder_texts[0] = "x-coordinate of point";
+            arr[1] = "Y:";
+            placeholder_texts[1] = "y-coordinate of point";
+            arr[2] = "m:";
+            placeholder_texts[2] = "Slope of line";
+            arr[3] = "c:";
+            placeholder_texts[3] = "Constant of line";
             break;
         default:
             break;
@@ -192,7 +227,7 @@ void on_combo_box_changed(GtkComboBox *combo_box, gpointer data)
             // Create an entry box
             GtkEntry *entry = GTK_ENTRY(gtk_entry_new());
 
-            //setting the placeholder text
+            // setting the placeholder text
             gtk_entry_set_placeholder_text(entry, placeholder_texts[i]);
             gtk_widget_set_name(GTK_WIDGET(entry), "my-entry-box");
             gtk_grid_attach(GTK_GRID(newGrid), GTK_WIDGET(entry), 1, i, 1, 1);
@@ -250,8 +285,16 @@ GtkWidget *createComboBox(GtkWidget *window, GtkWidget *entryBox)
     gtk_list_store_set(model, &iter, 0, "CYCLOID", -1);
 
     gtk_list_store_append(model, &iter);
+    gtk_list_store_set(model, &iter, 0, "EPICYCLOID", -1);
+
+    gtk_list_store_append(model, &iter);
+    gtk_list_store_set(model, &iter, 0, "HYPOCYCLOID", -1);
+    
+    gtk_list_store_append(model, &iter);
     gtk_list_store_set(model, &iter, 0, "SPIRAL", -1);
 
+    gtk_list_store_append(model, &iter);
+    gtk_list_store_set(model, &iter, 0, "MIRROR IMAGE", -1);
 
     GtkWidget *combo_box = gtk_combo_box_new_with_model(GTK_TREE_MODEL(model));
 

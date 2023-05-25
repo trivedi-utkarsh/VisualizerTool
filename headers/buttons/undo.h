@@ -31,12 +31,6 @@ GtkWidget *createUndoButton(GtkWidget *canvas, struct FigureStack *figureStack,s
     // creating a button
     GtkWidget *button = gtk_button_new_with_label("Undo");
 
-    // Create an image widget and load the icon file
-    GtkWidget *image = gtk_image_new_from_file("/icons/undo.png");
-
-    // Set the image widget as the button's label
-    gtk_button_set_image(GTK_BUTTON(button), image);
-
     // adding arguments to structure;
     struct UndoBtnArgs *args = (struct UndoBtnArgs *)malloc(sizeof(struct UndoBtnArgs));
 

@@ -1,13 +1,15 @@
 window {
     background: #e9f4f5
 }
-
-/* CSS */
+/* CSS for buttons */
 .btn {
+    padding-left: 18px;
+    padding-right: 18px;
     border-radius: 20px;
 }
 
-.btn:focus {
+.btn:focus,
+.color-chooser-btn {
     outline: none;
 }
 
@@ -30,9 +32,14 @@ headerbar.titlebar {
 }
 
 .sidebar {
-    /* border: 1px solid black; */
-    /* border-top: none;
+    /* border: 1px solid black; 
+     border-top: none;
     border-bottom: none; */
     font-weight: bold;
     background-color: rgba(148, 187, 233, .2);
+}
+
+.x-coordinate,.y-coordinate{
+  font-size: 16px;
+  padding-left: 12px;
 }

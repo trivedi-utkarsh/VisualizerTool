@@ -99,6 +99,7 @@ GtkWidget *createDrawButton(
 
     // Adding a custom CSS class to the button
     gtk_style_context_add_class(gtk_widget_get_style_context(button), "btn");
+    gtk_style_context_add_class(gtk_widget_get_style_context(button), "draw-btn");
 
     // setting button's height width
     gtk_widget_set_size_request(button, 20, 30);
