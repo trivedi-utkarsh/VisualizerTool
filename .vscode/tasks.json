@@ -53,6 +53,7 @@
 				"-lgobject-2.0",
 				"-lglib-2.0",
 				"-lintl",
+				"resources.o",
 				"-o",
 				"${fileDirname}\\${fileBasenameNoExtension}.exe"
 			],

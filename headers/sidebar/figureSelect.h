@@ -126,7 +126,7 @@ void on_combo_box_changed(GtkComboBox *combo_box, gpointer data)
             break;
         case 10: // hyperbola
             numBoxes = 4;
-            labelText = "Hyperbola";
+            labelText = "Horizontal Hyperbola";
             arr[0] = "X:";
             placeholder_texts[0] = "x-coordinate of centre";
             arr[1] = "Y:";
@@ -138,7 +138,7 @@ void on_combo_box_changed(GtkComboBox *combo_box, gpointer data)
             break;
         case 11: // hyperbola
             numBoxes = 4;
-            labelText = "Hyperbola";
+            labelText = "Vertical Hyperbola";
             arr[0] = "X:";
             placeholder_texts[0] = "x-coordinate of centre";
             arr[1] = "Y:";

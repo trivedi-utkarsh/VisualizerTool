@@ -317,28 +317,43 @@ void draw_spiral(cairo_t *cr, double x, double y, double radius, int turns, doub
     // Stroke the path (draw the spiral)
     cairo_stroke(cr);
 }
-void draw_mirrorImage(cairo_t *cr,double cx , double cy, double x, double y, double m, double c, double *color, double lineWidth)
+void draw_mirrorImage(cairo_t *cr, double cx, double cy, double x, double y, double m, double c, double *color, double lineWidth)
 {
 
-    // drawing the point
-    draw_point(cr, x, y, color);
+    // drawing the input point
+    cairo_set_source_rgb(cr, 0.5, 0.5, 0.5);
+    cairo_arc(cr, x, y, 3.0, 0, 2 * G_PI);
+    cairo_fill(cr);
 
-    double actualx = x - cx;
-    double actualy = y - cy;
-
+    // if line is y = mx + c;
     double x1, y1, x2, y2;
-    x1 = 0.0;
-    y1 = c;
-    x2 = -c/m;
-    y2 = 0;
+
+    // calculating end points from user coordinates
+    y1 = cy + 60; // adding 60 spacing for making line extend beyond the canvas
+    x1 = (y1 - c) / m;
+    y2 = -cy - 60; // reducing 60 spacing for making line extend beyond the canvas
+    x2 = (y2 - c) / m;
+
+    // converting to canvas coordinates and drawing line
+
+    // drawing the mirror line
+    cairo_set_source_rgb(cr, 0.5, 0.5, 0.5);
+    cairo_set_line_width(cr, 0.8);
+    cairo_move_to(cr, x1 + cx, cy - y1);
+    cairo_line_to(cr, x2 + cx, cy - y2);
+    cairo_stroke(cr);
+
+    // actual user coordinates
+    double userX = x - cx;
+    double userY = cy - y;
 
     // Calculate the mirror image point
 
-    double d = (x + (y - m * x + c) / m) / (1 + (1 / (m * m)));
-    double newX = 2 * d - x;
-    double newY = 2 * d * m - y + 2 * c;
+    double d = (m * userX - userY + c) / (m * m + 1);
+    double mirrorX = -2 * d * m + userX;
+    double mirrorY = 2 * d + userY;
+
+    draw_point(cr, mirrorX + cx, cy - mirrorY, color);
+
     cairo_stroke(cr);
 }
-
-
-

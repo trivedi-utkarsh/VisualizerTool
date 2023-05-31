@@ -1,21 +1,7 @@
 #include <gtk/gtk.h>
 
-struct ClearBtnArgs
-{
-    GtkWidget *canvas;
-    struct FigureStack *figureStack;
-};
-
 static void clear_button_clicked(GtkWidget *widget, gpointer data)
 {
-
-    // Cast the data pointer to the CallbackArgs structure
-    struct ClearBtnArgs *args = (struct ClearBtnArgs *)data;
-
-    // Accessing the arguments passed to the callback
-    GtkWidget * canvas = args->canvas;
-    struct FigureStack * figureStack = args->figureStack;
-
     // deleting all figures
     clear_figures(figureStack);
 
@@ -24,17 +10,12 @@ static void clear_button_clicked(GtkWidget *widget, gpointer data)
 
 }
 
-GtkWidget *createClearButton(GtkWidget *canvas, struct FigureStack *figureStack)
+GtkWidget *createClearButton()
 {
     // creating a button
     GtkWidget *button = gtk_button_new_with_label("Clear");
 
-    // adding arguments to structure;
-    struct ClearBtnArgs *args = (struct ClearBtnArgs *)malloc(sizeof(struct ClearBtnArgs));
-    args->canvas = canvas;
-    args->figureStack = figureStack;
-
-    g_signal_connect(button, "clicked", G_CALLBACK(clear_button_clicked), args);
+    g_signal_connect(button, "clicked", G_CALLBACK(clear_button_clicked), NULL);
 
     // Connect the enter and leave signals to change the cursor
     g_signal_connect(button, "enter-notify-event", G_CALLBACK(on_button_enter), NULL);

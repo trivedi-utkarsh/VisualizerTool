@@ -12,7 +12,8 @@
         "loadcss.h": "c",
         "shapestructure.h": "c",
         "load.h": "c",
-        "redo.h": "c"
+        "redo.h": "c",
+        "cmath": "c"
     },
     "cmake.sourceDirectory": "${workspaceFolder}/Users/trive/StudioProjects/flutter_app/windows/runner"
 }

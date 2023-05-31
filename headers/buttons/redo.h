@@ -1,23 +1,8 @@
 #include <gtk/gtk.h>
 
-struct RedoBtnArgs
-{
-    GtkWidget *canvas;
-    struct FigureStack *figureStack;
-    struct FigureStack *redoStack;
-};
-
 static void redo_button_clicked(GtkWidget *widget, gpointer data)
 {
-
-    // Cast the data pointer to the CallbackArgs structure
-    struct RedoBtnArgs *args = (struct RedoBtnArgs *)data;
-
-    // Accessing the arguments passed to the callback
-    GtkWidget * canvas = args->canvas;
-    struct FigureStack * figureStack = args->figureStack;
-    struct FigureStack * redoStack = args->redoStack;
-
+    
     // performing the redo
     transfer_figure(redoStack,figureStack);
 
@@ -26,19 +11,12 @@ static void redo_button_clicked(GtkWidget *widget, gpointer data)
 
 }
 
-GtkWidget *createRedoButton(GtkWidget *canvas, struct FigureStack *figureStack,struct FigureStack *redoStack)
+GtkWidget *createRedoButton()
 {
     // creating a button
     GtkWidget *button = gtk_button_new_with_label("Redo");
 
-    // adding arguments to structure;
-    struct RedoBtnArgs *args = (struct RedoBtnArgs *)malloc(sizeof(struct RedoBtnArgs));
-
-    args->canvas = canvas;
-    args->figureStack = figureStack;
-    args->redoStack = redoStack;
-
-    g_signal_connect(button, "clicked", G_CALLBACK(redo_button_clicked), args);
+    g_signal_connect(button, "clicked", G_CALLBACK(redo_button_clicked), NULL);
 
     // Connect the enter and leave signals to change the cursor
     g_signal_connect(button, "enter-notify-event", G_CALLBACK(on_button_enter), NULL);

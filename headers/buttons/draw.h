@@ -1,34 +1,23 @@
 #include <gtk/gtk.h>
 #include <stdlib.h>
 #include "buttons.h"
+#include "../globals.h"
 
 // Custom structure to hold the drawing callback arguments
 struct Draw_CallbackArgs {
-    struct FigureStack *figureStack;
-    struct FigureStack *redoStack;
     GtkWidget *entry_box;
     GtkWidget *figure_combo;
-    GtkWidget *canvas;
-    double * colorValue;
-    double *lineWidth;
 };
 
 // Callback function to handle the "Draw" button click event
 void drawing_button_clicked(GtkButton *button, gpointer data)
 {
-
-
     // Cast the data pointer to the CallbackArgs structure
     struct Draw_CallbackArgs *args = (struct Draw_CallbackArgs *)data;
 
     // Accessing the arguments passed to the callback
-    struct FigureStack *figureStack = args->figureStack;
-    struct FigureStack *redoStack = args->redoStack;
     GtkWidget *entry_box = args->entry_box;
     GtkWidget *figure_combo = args->figure_combo;
-    GtkWidget *canvas = args->canvas;
-    double * colorValue = args->colorValue;
-    double * lineWidth = args->lineWidth;
 
     // finding type of figure
     gint type = gtk_combo_box_get_active(GTK_COMBO_BOX(figure_combo));
@@ -68,13 +57,8 @@ void drawing_button_clicked(GtkButton *button, gpointer data)
 }
 
 GtkWidget *createDrawButton(
-    GtkWidget *canvas,
     GtkWidget *figure_combo,
-    GtkWidget *entry_box,
-    struct FigureStack * figureStack,
-    struct FigureStack * redoStack,
-    double * colorValue,
-    double *lineWidth
+    GtkWidget *entry_box
     )
 {
 
@@ -83,13 +67,8 @@ GtkWidget *createDrawButton(
     
     // setting arguments to pass in callback
     struct Draw_CallbackArgs * args = (struct Draw_CallbackArgs *)malloc(sizeof(struct Draw_CallbackArgs));
-    args->figureStack = figureStack;
-    args->redoStack = redoStack;
     args->entry_box = entry_box;
     args->figure_combo = figure_combo;
-    args->canvas = canvas;
-    args->colorValue = colorValue;
-    args->lineWidth = lineWidth;
 
     g_signal_connect(button, "clicked", G_CALLBACK(drawing_button_clicked), args);
 

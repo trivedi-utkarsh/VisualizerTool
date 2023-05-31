@@ -20,39 +20,34 @@ struct KeypressArgs
 gboolean on_key_pressed(GtkWidget *widget, GdkEventKey *event, gpointer user_data)
 {
 	// for activating draw click
-	if ((event->state & GDK_CONTROL_MASK) && (event->keyval == GDK_KEY_d)|| (event->state & GDK_CONTROL_MASK) && (event->keyval == GDK_KEY_D))
+	if ((event->state & GDK_CONTROL_MASK) && (event->keyval == GDK_KEY_d) || (event->state & GDK_CONTROL_MASK) && (event->keyval == GDK_KEY_D))
 	{
-		GtkWidget * button = ((struct KeypressArgs *)(user_data))->draw_button;
+		GtkWidget *button = ((struct KeypressArgs *)(user_data))->draw_button;
 		g_signal_emit_by_name(button, "clicked");
 	}
 	// for activating undo click
-	else if ((event->state & GDK_CONTROL_MASK) && (event->keyval == GDK_KEY_z)|| (event->state & GDK_CONTROL_MASK) && (event->keyval == GDK_KEY_Z))
+	else if ((event->state & GDK_CONTROL_MASK) && (event->keyval == GDK_KEY_z) || (event->state & GDK_CONTROL_MASK) && (event->keyval == GDK_KEY_Z))
 	{
-		GtkWidget * button = ((struct KeypressArgs *)(user_data))->undo_button;
+		GtkWidget *button = ((struct KeypressArgs *)(user_data))->undo_button;
 		g_signal_emit_by_name(button, "clicked");
 	}
 	// for activating redo click
-	else if ((event->state & GDK_CONTROL_MASK) && (event->keyval == GDK_KEY_y)|| (event->state & GDK_CONTROL_MASK) && (event->keyval == GDK_KEY_Y))
+	else if ((event->state & GDK_CONTROL_MASK) && (event->keyval == GDK_KEY_y) || (event->state & GDK_CONTROL_MASK) && (event->keyval == GDK_KEY_Y))
 	{
-		GtkWidget * button = ((struct KeypressArgs *)(user_data))->redo_button;
+		GtkWidget *button = ((struct KeypressArgs *)(user_data))->redo_button;
 		g_signal_emit_by_name(button, "clicked");
 	}
 	// for activating clear click
-	else if ((event->state & GDK_CONTROL_MASK) && (event->keyval == GDK_KEY_c)|| (event->state & GDK_CONTROL_MASK) && (event->keyval == GDK_KEY_C))
+	else if ((event->state & GDK_CONTROL_MASK) && (event->keyval == GDK_KEY_c) || (event->state & GDK_CONTROL_MASK) && (event->keyval == GDK_KEY_C))
 	{
-		GtkWidget * button = ((struct KeypressArgs *)(user_data))->clear_button;
+		GtkWidget *button = ((struct KeypressArgs *)(user_data))->clear_button;
 		g_signal_emit_by_name(button, "clicked");
 	}
 
 	return FALSE;
 }
 
-GtkWidget *createSideBar(
-	GtkWidget *window,
-	struct FigureStack *figureStack,
-	struct FigureStack *redoStack,
-	double *colorValue,
-	double *lineWidth)
+GtkWidget *createSideBar()
 {
 	GtkWidget *contentArea;
 	GtkWidget *hpaned;
@@ -76,19 +71,18 @@ GtkWidget *createSideBar(
 	gtk_box_pack_start(GTK_BOX(selector_box), figure_combo, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(selector_box), entryBox, FALSE, FALSE, 0);
 
-	//creating a x,y coordinate label;
-	GtkWidget *coordinate_box = gtk_box_new(GTK_ORIENTATION_VERTICAL,0);
+	// creating a x,y coordinate label;
+	GtkWidget *coordinate_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
 	GtkWidget *x_coordinate_label = gtk_label_new("X: 0");
 	GtkWidget *y_coordinate_label = gtk_label_new("Y: 0");
 	gtk_style_context_add_class(gtk_widget_get_style_context(x_coordinate_label), "x-coordinate");
 	gtk_style_context_add_class(gtk_widget_get_style_context(y_coordinate_label), "y-coordinate");
-	gtk_box_pack_start(GTK_BOX(coordinate_box),x_coordinate_label,FALSE,FALSE,5);
-	gtk_box_pack_start(GTK_BOX(coordinate_box),y_coordinate_label,FALSE,FALSE,5);
+	gtk_box_pack_start(GTK_BOX(coordinate_box), x_coordinate_label, FALSE, FALSE, 5);
+	gtk_box_pack_start(GTK_BOX(coordinate_box), y_coordinate_label, FALSE, FALSE, 5);
 	gtk_widget_set_halign(x_coordinate_label, GTK_ALIGN_START);
 	gtk_widget_set_halign(y_coordinate_label, GTK_ALIGN_START);
 
 	gtk_box_pack_start(GTK_BOX(tool_bar_box), coordinate_box, FALSE, FALSE, 10);
-
 
 	// Create the color button
 	GtkWidget *color_label = gtk_label_new("CHOOSE COLOUR");
@@ -100,7 +94,7 @@ GtkWidget *createSideBar(
 
 	// creating line width slider
 	GtkWidget *line_width_label = gtk_label_new("CHOOSE WIDTH");
-	GtkWidget *line_width_slider = createRangeSlider(lineWidth);
+	GtkWidget *line_width_slider = createRangeSlider();
 	GtkWidget *line_width_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
 	gtk_box_pack_start(GTK_BOX(line_width_box), line_width_label, FALSE, FALSE, 10);
 	gtk_widget_set_valign(line_width_label, GTK_ALIGN_CENTER);
@@ -115,23 +109,23 @@ GtkWidget *createSideBar(
 	contentArea = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
 
 	// adding the canvas into content area
-	GtkWidget *canvas = createCanvas(figureStack,x_coordinate_label, y_coordinate_label);
+	canvas = createCanvas(figureStack, x_coordinate_label, y_coordinate_label);
 	GtkWidget *canvas_Label = gtk_label_new("CANVAS");
 	gtk_style_context_add_class(gtk_widget_get_style_context(canvas_Label), "head-label");
 	gtk_box_pack_start(GTK_BOX(contentArea), canvas_Label, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(contentArea), canvas, TRUE, TRUE, 0);
 
 	// creating the draw button in the bottom bar
-	GtkWidget *draw_button = createDrawButton(canvas, figure_combo, entryBox, figureStack, redoStack, colorValue, lineWidth);
+	GtkWidget *draw_button = createDrawButton(figure_combo, entryBox);
 
 	// creating the clear button in the bottom bar
-	GtkWidget *clear_button = createClearButton(canvas, figureStack);
+	GtkWidget *clear_button = createClearButton();
 
 	// creating undo button in the bottom bar
-	GtkWidget *undo_button = createUndoButton(canvas, figureStack, redoStack);
+	GtkWidget *undo_button = createUndoButton();
 
 	// creating a redo button in the bottom bar
-	GtkWidget *redo_button = createRedoButton(canvas, figureStack, redoStack);
+	GtkWidget *redo_button = createRedoButton();
 
 	// creating the bottom bar
 	GtkWidget *bottom_bar = gtk_grid_new();

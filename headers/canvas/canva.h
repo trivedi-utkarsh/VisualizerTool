@@ -35,9 +35,6 @@ gboolean on_canvas_motion_notify(GtkWidget *widget, GdkEventMotion *event, gpoin
     gtk_label_set_text(GTK_LABEL(x_label), textx);
     gtk_label_set_text(GTK_LABEL(y_label), texty);
 
-    // Do something with the coordinates (e.g., display them, update UI, etc.)
-    printf("Mouse coordinates: x=%lf, y=%lf\n", event->x - cx, cy - event->y);
-
     return TRUE;
 }
 
@@ -45,9 +42,9 @@ void draw_arrow_head(cairo_t *cr, double x1, double y1, double x2, double y2, do
 {
     double angle = atan2(y2 - y1, x2 - x1);
     cairo_move_to(cr, x2, y2);
-    cairo_rel_line_to(cr, -arrow_size * cos(angle - M_PI / 6), -arrow_size * sin(angle - M_PI / 6));
+    cairo_rel_line_to(cr, -arrow_size * cos(angle - G_PI / 6), -arrow_size * sin(angle - G_PI / 6));
     cairo_move_to(cr, x2, y2);
-    cairo_rel_line_to(cr, -arrow_size * cos(angle + M_PI / 6), -arrow_size * sin(angle + M_PI / 6));
+    cairo_rel_line_to(cr, -arrow_size * cos(angle + G_PI / 6), -arrow_size * sin(angle + G_PI / 6));
     cairo_stroke(cr);
 }
 

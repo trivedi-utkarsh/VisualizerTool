@@ -1,23 +1,8 @@
 #include <gtk/gtk.h>
 
-struct UndoBtnArgs
-{
-    GtkWidget *canvas;
-    struct FigureStack *figureStack;
-    struct FigureStack *redoStack;
-};
-
 static void undo_button_clicked(GtkWidget *widget, gpointer data)
 {
-
-    // Cast the data pointer to the CallbackArgs structure
-    struct UndoBtnArgs *args = (struct UndoBtnArgs *)data;
-
-    // Accessing the arguments passed to the callback
-    GtkWidget * canvas = args->canvas;
-    struct FigureStack * figureStack = args->figureStack;
-    struct FigureStack * redoStack = args->redoStack;
-
+    
     // popping the figure stack and adding to redoStack;
     transfer_figure(figureStack,redoStack);
     
@@ -26,19 +11,12 @@ static void undo_button_clicked(GtkWidget *widget, gpointer data)
 
 }
 
-GtkWidget *createUndoButton(GtkWidget *canvas, struct FigureStack *figureStack,struct FigureStack * redoStack)
+GtkWidget *createUndoButton()
 {
     // creating a button
     GtkWidget *button = gtk_button_new_with_label("Undo");
 
-    // adding arguments to structure;
-    struct UndoBtnArgs *args = (struct UndoBtnArgs *)malloc(sizeof(struct UndoBtnArgs));
-
-    args->canvas = canvas;
-    args->figureStack = figureStack;
-    args->redoStack = redoStack;
-
-    g_signal_connect(button, "clicked", G_CALLBACK(undo_button_clicked), args);
+    g_signal_connect(button, "clicked", G_CALLBACK(undo_button_clicked), NULL);
 
     // Connect the enter and leave signals to change the cursor
     g_signal_connect(button, "enter-notify-event", G_CALLBACK(on_button_enter), NULL);

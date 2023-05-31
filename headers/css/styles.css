@@ -1,7 +1,9 @@
 window {
     background: #e9f4f5
 }
+
 /* CSS for buttons */
+
 .btn {
     padding-left: 18px;
     padding-right: 18px;
@@ -32,9 +34,6 @@ headerbar.titlebar {
 }
 
 .sidebar {
-    /* border: 1px solid black; 
-     border-top: none;
-    border-bottom: none; */
     font-weight: bold;
     background-color: rgba(148, 187, 233, .2);
 }
