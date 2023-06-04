@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 	gtk_widget_show_all(window);
 
 	//launching user manual
-	GtkWidget *dialogBox = createUserManual();
+	// GtkWidget *dialogBox = createUserManual();
 
 	// start the main gtk loop
 	gtk_main();
