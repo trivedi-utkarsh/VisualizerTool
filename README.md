@@ -47,4 +47,4 @@ A big thank you to the following individuals for their contributions to this pro
 
 ## Contact
 
-For questions or inquiries, please contact [<ins>here</ins>](guptashreyansh2048@gmail.com).
+For questions or inquiries, please contact [<ins>here</ins>](trivediutkarsh31@gmail.com).
